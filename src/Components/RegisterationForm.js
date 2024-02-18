@@ -4,16 +4,15 @@ import { Year } from './FieldsData'
 
 export default function RegisterationForm() {
 
-    const [YearValue , setYearValue] = useState("")
-    const [Branch , setBranch] = useState('')
-    const [Gender , setGender] = useState('female')
 
     const IntialFieldsValue = {
         name:"",
         rollnumber:"",
         contact:"",
-        branch:Branch,
-        gender:Gender,
+        branch:'',
+        year:"",
+        gender:'female',
+        terms:false
     }
     
     const [inputValue , setInputValue] = useState(IntialFieldsValue)
@@ -29,19 +28,16 @@ export default function RegisterationForm() {
     const handleOnSubmit = (e)=>{
         e.preventDefault()
         console.log(inputValue)
+        setInputValue(IntialFieldsValue)
     }
 
 
     // Handle On Clear
-    const handleOnClearFields = (e)=>{
-        e.preventDefault()
-        console.log("clearing the fields")
-        setInputValue({
-            name:"",
-            rollnumber:"",
-            contact:""
-        })
-    }
+    const handleOnClearFields = (e) => {
+        e.preventDefault();
+        setInputValue(IntialFieldsValue);
+    };
+    
 
 
 
@@ -62,7 +58,7 @@ export default function RegisterationForm() {
                 {/* Roll Number Field */}
                 <Grid sm={6} xs={12} item>
                     <FormControl fullWidth>
-                        <TextField onChange={handleOnFieldsChange}   type='number' name='rollnumber' label="Roll Number" />
+                        <TextField onChange={handleOnFieldsChange}   type='number' value={inputValue.rollnumber} name='rollnumber' label="Roll Number" />
                     </FormControl>
                 </Grid>
 
@@ -78,7 +74,7 @@ export default function RegisterationForm() {
                 <Grid  sm={6} xs={12} item >
                     <FormControl fullWidth >
                         <InputLabel>Year</InputLabel>
-                        <Select label='Year' value={YearValue} onChange={(e)=>{setYearValue(e.target.value)}} >
+                        <Select label='Year' value={inputValue.year} name='year' onChange={handleOnFieldsChange} >
                             {Year && Year.map((data,index)=>{
                                 return <MenuItem key={index} value={data} >{data}</MenuItem>
                             })}
@@ -87,11 +83,12 @@ export default function RegisterationForm() {
                 </Grid>
 
 
+
                 {/* Branch Field */}
                 <Grid sm={6} xs={12} item>
                     <FormControl fullWidth >
                         <InputLabel>Branch</InputLabel>
-                        <Select label='Branch' value={Branch} onChange={(e)=>{setBranch(e.target.value)}} >
+                        <Select label='Branch' value={inputValue.branch} name='branch' onChange={handleOnFieldsChange} >
                             <MenuItem value="Arts" >Arts</MenuItem>
                             <MenuItem value="Commerce" >Commerce</MenuItem>
                             <MenuItem value="Science" >Science</MenuItem>
@@ -103,7 +100,7 @@ export default function RegisterationForm() {
                 {/* Contact Field */}
                 <Grid sm={6} xs={12} item >
                     <FormControl fullWidth >
-                        <TextField onChange={handleOnFieldsChange} label="Contact" type='number' name='contact' />
+                        <TextField onChange={handleOnFieldsChange} label="Contact" value={inputValue.contact} type='number' name='contact'  />
                     </FormControl>
                 </Grid>
 
@@ -112,8 +109,8 @@ export default function RegisterationForm() {
                 <Grid sm={6} xs={12} item>
                     <FormControl  fullWidth >
                         <FormLabel>Gender</FormLabel>
-                        <RadioGroup sx={{display:"flex" , flexDirection:"row"}} value={Gender} onChange={(e)=>{setGender(e.target.value)}} defaultValue="Female" >
-                        <FormControlLabel control={<Radio/>} value='female' label="Female" />
+                        <RadioGroup sx={{display:"flex" , flexDirection:"row"}} name='gender'   onChange={handleOnFieldsChange} value={inputValue.gender} >
+                        <FormControlLabel control={<Radio />} value='female' label="Female" />
                         <FormControlLabel control={<Radio/>} value='male' label="Male" />
                         <FormControlLabel control={<Radio/>} value='other' label="Other" />
                         </RadioGroup>
@@ -123,7 +120,7 @@ export default function RegisterationForm() {
 
                 {/* Term and Condition */}
                 <Grid  xs={12} item >
-                    <FormControlLabel  control={<Checkbox/>}  label="Agree To Terms and Condition" />
+                    <FormControlLabel  control={<Checkbox checked={inputValue.terms} onChange={(e)=>{setInputValue({...inputValue , terms:e.target.checked})}} />}  label="Agree To Terms and Condition" />
                 </Grid>
 
             </Grid>
