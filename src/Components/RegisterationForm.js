@@ -1,14 +1,15 @@
-import { Container, FormControl, Grid, TextField, Typography , Box, InputLabel, Select, MenuItem, FormLabel, RadioGroup, FormControlLabel, Radio, Checkbox, Button} from '@mui/material'
+import { Container, FormControl, Grid, TextField, Typography , Box, InputLabel, Select, MenuItem, FormLabel, RadioGroup, FormControlLabel, Radio, Checkbox, Button } from '@mui/material'
 import React, { useState } from 'react'
 import { Year } from './FieldsData'
+import {useForm} from 'react-hook-form'
+import GridTable from './GridTable'
 
 export default function RegisterationForm() {
 
+    const {register , formState:{errors} , handleSubmit , reset} = useForm()
+    const [formData , setFormData] = useState([])
 
     const IntialFieldsValue = {
-        name:"",
-        rollnumber:"",
-        contact:"",
         branch:'',
         year:"",
         gender:'female',
@@ -25,9 +26,9 @@ export default function RegisterationForm() {
 
 
     // Handle On Submit
-    const handleOnSubmit = (e)=>{
-        e.preventDefault()
-        console.log(inputValue)
+    const handleOnSubmit = (data)=>{
+        setFormData([...formData , {...data , inputValue}])
+        reset()
         setInputValue(IntialFieldsValue)
     }
 
@@ -35,9 +36,11 @@ export default function RegisterationForm() {
     // Handle On Clear
     const handleOnClearFields = (e) => {
         e.preventDefault();
+        reset()
         setInputValue(IntialFieldsValue);
     };
-    
+
+
 
 
 
@@ -52,20 +55,22 @@ export default function RegisterationForm() {
 
 
         {/* Form */}
-        <form onSubmit={handleOnSubmit} >
+        <form onSubmit={handleSubmit(handleOnSubmit)} >
             <Grid container spacing={2} >
 
                 {/* Roll Number Field */}
                 <Grid sm={6} xs={12} item>
                     <FormControl fullWidth>
-                        <TextField onChange={handleOnFieldsChange}   type='number' value={inputValue.rollnumber} name='rollnumber' label="Roll Number" />
+                        <TextField   type='number'  name='rollnumber' label="Roll Number"  helperText={Boolean(errors.rollnumber) ? <Typography>
+                            Min Value is 6
+                        </Typography> : null}  error={Boolean(errors.rollnumber)} {...register("rollnumber" , {minLength:6 , required:true} )}/>
                     </FormControl>
                 </Grid>
 
                 {/*Name Field*/}
                 <Grid  sm={6} xs={12} item>
                     <FormControl fullWidth>
-                        <TextField onChange={handleOnFieldsChange} value={inputValue.name} type='text' name='name' label="Name" />
+                        <TextField helperText={Boolean(errors.name) ? <> <Typography>Fill this field</Typography> </> : null} error={Boolean(errors.name)} type='text' name='name' label="Name" {...register("name" , {required:true})} />
                     </FormControl>
                 </Grid>
 
@@ -100,7 +105,7 @@ export default function RegisterationForm() {
                 {/* Contact Field */}
                 <Grid sm={6} xs={12} item >
                     <FormControl fullWidth >
-                        <TextField onChange={handleOnFieldsChange} label="Contact" value={inputValue.contact} type='number' name='contact'  />
+                        <TextField onChange={handleOnFieldsChange} error={Boolean(errors.contact)} helperText={Boolean(errors.contact) ? <Typography>Minimum length 10</Typography> : null} label="Contact" value={inputValue.contact} type='number' name='contact' {...register("contact" , {minLength:10 , required:true})}  />
                     </FormControl>
                 </Grid>
 
@@ -137,6 +142,19 @@ export default function RegisterationForm() {
                 </Grid>
         </form>
     </Container>
+
+
+
+    {/* ------------------------------------------------------------------------------------------------------------ */}
+    <GridTable data={formData} />
+    <Typography>{formData && formData.map((data,index)=>{
+        return <Box key={index}>
+            <Typography>
+                {data.inputValue.branch}
+            </Typography>
+        </Box>
+    })}</Typography>
+    
     </>
   )
 }

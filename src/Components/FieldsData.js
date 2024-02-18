@@ -4,4 +4,3 @@ const currentYear = new Date().getFullYear()
         Year.push(i)
     }
 
-    console.log(Year)
