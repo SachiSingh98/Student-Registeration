@@ -1,13 +1,19 @@
-import { Container, FormControl, Grid, TextField, Typography , Box, InputLabel, Select, MenuItem, FormLabel, RadioGroup, FormControlLabel, Radio, Checkbox, Button } from '@mui/material'
-import React, { useState } from 'react'
+import { Container, FormControl, Grid, TextField, Typography , Box, InputLabel, Select, MenuItem, FormLabel, RadioGroup, FormControlLabel, Radio, Checkbox, Button, useTheme, useMediaQuery, Switch, Alert } from '@mui/material'
+import React, { useContext, useState } from 'react'
 import { Year } from './YearFieldData'
 import {useForm} from 'react-hook-form'
 import GridTable from './GridTable'
+import DataCard from './DataCard'
+import { DarkThemeContext } from '../Context/DarkThemeProvider'
 
 export default function RegisterationForm() {
 
     const {register , formState:{errors} , handleSubmit , reset} = useForm()
     const [formData , setFormData] = useState([])
+    const [formSubmitAlert , setFormSubmitAlert] = useState(false)
+    const theme = useTheme()
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"))
+    const {DarkMode ,setDarkMode} = useContext(DarkThemeContext)
 
     const IntialFieldsValue = {
         branch:'',
@@ -30,6 +36,13 @@ export default function RegisterationForm() {
         setFormData([...formData , {  id:Date.now() , ...data , ...inputValue}])
         reset()
         setInputValue(IntialFieldsValue)
+        setFormSubmitAlert(true)
+
+
+        // Closing the success Alert
+        setTimeout(() => {
+            setFormSubmitAlert(false)
+        }, 2000);
     }
 
 
@@ -46,6 +59,14 @@ export default function RegisterationForm() {
   return (
     <>
     <Container maxWidth="md">
+
+
+        <Box mt={2} display={"flex"} justifyContent={"end"} >
+            <Switch onChange={(e)=>{setDarkMode(e.target.checked)}}  />
+            <Typography p={1} > 
+                {DarkMode ? "Light Mode" : "Dark Mode"}
+            </Typography>
+        </Box>
 
         {/* Form Heading */}
         <Box padding={2} textAlign={"center"} mt={1} >
@@ -140,12 +161,21 @@ export default function RegisterationForm() {
                     </Grid>
                 </Grid>
         </form>
+
+
+
+        {/* Form Submit Alert */}
+        {formSubmitAlert ? <Box mt={2} >
+            <Alert severity='success' >
+                Form Submit Succefully
+            </Alert>
+        </Box> : null}
     </Container>
 
 
 
-    {/* ------------------------------------------------------------------------------------------------------------ */}
-    <GridTable formData={formData} />
+    {/* ------------------------------------------------------------------------------------------------------------ */ }
+    {isMediumScreen ? <DataCard formData={formData} /> :  <GridTable formData={formData} />}
 
     
     </>
