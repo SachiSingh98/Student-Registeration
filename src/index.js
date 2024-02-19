@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css'
-import { ThemeProvider } from '@mui/material';
-import { CustomizeFormTheme } from './Components/Theme';
+import DarkThemeProvider from './Context/DarkThemeProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <ThemeProvider theme={CustomizeFormTheme} >
+    <DarkThemeProvider>
         <App />
-    </ThemeProvider>
+    </DarkThemeProvider>
 );
