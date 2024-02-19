@@ -1,6 +1,6 @@
 import { Container, FormControl, Grid, TextField, Typography , Box, InputLabel, Select, MenuItem, FormLabel, RadioGroup, FormControlLabel, Radio, Checkbox, Button } from '@mui/material'
 import React, { useState } from 'react'
-import { Year } from './FieldsData'
+import { Year } from './YearFieldData'
 import {useForm} from 'react-hook-form'
 import GridTable from './GridTable'
 
@@ -27,15 +27,14 @@ export default function RegisterationForm() {
 
     // Handle On Submit
     const handleOnSubmit = (data)=>{
-        setFormData([...formData , {...data , inputValue}])
+        setFormData([...formData , {  id:Date.now() , ...data , ...inputValue}])
         reset()
         setInputValue(IntialFieldsValue)
     }
 
 
     // Handle On Clear
-    const handleOnClearFields = (e) => {
-        e.preventDefault();
+    const handleOnClearFields = () => {
         reset()
         setInputValue(IntialFieldsValue);
     };
@@ -62,15 +61,15 @@ export default function RegisterationForm() {
                 <Grid sm={6} xs={12} item>
                     <FormControl fullWidth>
                         <TextField   type='number'  name='rollnumber' label="Roll Number"  helperText={Boolean(errors.rollnumber) ? <Typography>
-                            Min Value is 6
-                        </Typography> : null}  error={Boolean(errors.rollnumber)} {...register("rollnumber" , {minLength:6 , required:true} )}/>
+                            Max length is 6
+                        </Typography> : null}  error={Boolean(errors.rollnumber)} {...register("rollnumber" , {maxLength:6,required:true} )}/>
                     </FormControl>
                 </Grid>
 
                 {/*Name Field*/}
                 <Grid  sm={6} xs={12} item>
                     <FormControl fullWidth>
-                        <TextField helperText={Boolean(errors.name) ? <> <Typography>Fill this field</Typography> </> : null} error={Boolean(errors.name)} type='text' name='name' label="Name" {...register("name" , {required:true})} />
+                        <TextField helperText={Boolean(errors.name) ? <> <Typography>Required field *</Typography> </> : null} error={Boolean(errors.name)} type='text' name='name' label="Name" {...register("name" , {required:true})} />
                     </FormControl>
                 </Grid>
 
@@ -125,7 +124,7 @@ export default function RegisterationForm() {
 
                 {/* Term and Condition */}
                 <Grid  xs={12} item >
-                    <FormControlLabel  control={<Checkbox checked={inputValue.terms} onChange={(e)=>{setInputValue({...inputValue , terms:e.target.checked})}} />}  label="Agree To Terms and Condition" />
+                    <FormControlLabel  control={<Checkbox checked={inputValue.terms} required onChange={(e)=>{setInputValue({...inputValue , terms:e.target.checked})}} />}  label="Agree To Terms and Condition" />
                 </Grid>
 
             </Grid>
@@ -133,11 +132,11 @@ export default function RegisterationForm() {
                 {/* Buttons for Cancel and submit */}
                 <Grid textAlign='center' container  spacing={2} mt={2} >
                     <Grid xs={12}  sm={6} item>
-                        <Button fullWidth variant='outlined'  onClick={handleOnClearFields} >Clear</Button>
+                        <Button fullWidth variant='outlined'   onClick={handleOnClearFields} >Clear</Button>
                     </Grid>
 
                     <Grid xs={12} sm={6} item>
-                        <Button fullWidth variant='contained' type='submit' >Submit</Button>
+                        <Button fullWidth variant='contained'  disabled={Boolean(errors.rollnumber || errors.name || errors.contact )} type='submit' >Submit</Button>
                     </Grid>
                 </Grid>
         </form>
@@ -146,14 +145,8 @@ export default function RegisterationForm() {
 
 
     {/* ------------------------------------------------------------------------------------------------------------ */}
-    <GridTable data={formData} />
-    <Typography>{formData && formData.map((data,index)=>{
-        return <Box key={index}>
-            <Typography>
-                {data.inputValue.branch}
-            </Typography>
-        </Box>
-    })}</Typography>
+    <GridTable formData={formData} />
+
     
     </>
   )
