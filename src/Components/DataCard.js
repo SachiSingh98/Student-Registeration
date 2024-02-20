@@ -21,7 +21,9 @@ export default function DataCard({formData}) {
                     </Card>
                 </Box>
             })
-            : "No Data Available"}            
+            : <Box padding={2} textAlign={"center"} >  
+              <Typography fontWeight={700} variant='h5' >No Data Available</Typography>
+              </Box>}            
     </Container>
     </>
   )

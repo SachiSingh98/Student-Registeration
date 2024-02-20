@@ -1,17 +1,32 @@
 import {createTheme} from '@mui/material'
 
+export const LightModeTheme = createTheme({
+  palette:{
+    primary:{
+      main:"#484b6a"
+    },
+    text:{
+      primary:"#8a8ca2"
+    }
+  },
+})
+
+
+
+
  export const CustomizeFormTheme = createTheme({
     palette:{
       primary:{
-        main:"#484b6a"
+        main:"#8a8ca2"
+      },
+      mode:"dark",
+      success:{
+        main:"#8a8ca2"
+      },
+      text:{
+        primary:"#8a8ca2"
       }
     }
   })
 
-  export const LightModeTheme = createTheme({
-    palette:{
-      primary:{
-        main:"#ffd1d9"
-      }
-    }
-  })
+

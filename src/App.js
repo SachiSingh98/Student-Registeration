@@ -4,21 +4,20 @@ import StudentsData from "./Components/StudentsData";
 import { ThemeProvider } from "@mui/material";
 import { CustomizeFormTheme, LightModeTheme } from "./Components/Theme";
 import { DarkThemeContext } from "./Context/DarkThemeProvider";
+import CssBaseline from "@mui/material/CssBaseline";
 
 export default function App() {
+  const { DarkMode } = useContext(DarkThemeContext);
 
-  const {DarkMode} = useContext(DarkThemeContext)
+  const theme = DarkMode ? CustomizeFormTheme : LightModeTheme;
 
-
-  const theme = DarkMode ? CustomizeFormTheme : LightModeTheme
-
-  // const theme = createTheme(DarkMode ? CustomizeFormTheme : )
   return (
     <>
-    <ThemeProvider theme={theme} >
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <RegisterationForm />
         <StudentsData />
-    </ThemeProvider>
+      </ThemeProvider>
     </>
   );
 }
