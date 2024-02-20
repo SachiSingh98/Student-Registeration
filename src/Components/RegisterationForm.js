@@ -125,7 +125,7 @@ export default function RegisterationForm() {
                 {/* Contact Field */}
                 <Grid sm={6} xs={12} item >
                     <FormControl fullWidth >
-                        <TextField onChange={handleOnFieldsChange} error={Boolean(errors.contact)} helperText={Boolean(errors.contact) ? <Typography>Minimum length 10</Typography> : null} label="Contact" value={inputValue.contact} type='number' name='contact' {...register("contact" , {minLength:10 , required:true})}  />
+                        <TextField onChange={handleOnFieldsChange} error={Boolean(errors.contact)} helperText={Boolean(errors.contact) ? <Typography>Length should be 10</Typography> : null} label="Contact" value={inputValue.contact} type='number' name='contact' {...register("contact" , {minLength:10 , required:true})}  />
                     </FormControl>
                 </Grid>
 
