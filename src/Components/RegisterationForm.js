@@ -8,35 +8,29 @@ import { DarkThemeContext } from '../Context/DarkThemeProvider'
 
 export default function RegisterationForm() {
 
-    const {register , formState:{errors} , handleSubmit , reset} = useForm()
+    const {register , formState:{errors} , handleSubmit , reset , watch , setValue} = useForm({
+        defaultValues:{
+            branch:"",
+            year:"",
+            gender:"female",
+            terms:false
+        }
+    })
     const [formData , setFormData] = useState([])
     const [formSubmitAlert , setFormSubmitAlert] = useState(false)
     const theme = useTheme()
     const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"))
     const {DarkMode ,setDarkMode} = useContext(DarkThemeContext)
 
-    const IntialFieldsValue = {
-        branch:'',
-        year:"",
-        gender:'female',
-        terms:false
-    }
-    
-    const [inputValue , setInputValue] = useState(IntialFieldsValue)
 
-
-    // Function for Text fields handle change
-    const handleOnFieldsChange = (e)=>{
-        setInputValue({...inputValue , [e.target.name]:e.target.value})
-    }
 
 
     // Handle On Submit
     const handleOnSubmit = (data)=>{
-        setFormData([...formData , {  id:Date.now() , ...data , ...inputValue}])
+        setFormData([...formData , {  id:Date.now() , ...data}])
         reset()
-        setInputValue(IntialFieldsValue)
         setFormSubmitAlert(true)
+        console.log(data)
 
 
         // Closing the success Alert
@@ -49,8 +43,17 @@ export default function RegisterationForm() {
     // Handle On Clear
     const handleOnClearFields = () => {
         reset()
-        setInputValue(IntialFieldsValue);
     };
+
+
+    // Handle OnChange
+    const handleOnChange = (e)=>{
+        const name = e.target.name
+        const value = e.target.value
+
+        setValue(name , value)
+        register(name)
+    }
 
 
 
@@ -97,9 +100,9 @@ export default function RegisterationForm() {
 
                 {/* Year Field */}
                 <Grid  sm={6} xs={12} item >
-                    <FormControl fullWidth >
+                    <FormControl  fullWidth >
                         <InputLabel>Year</InputLabel>
-                        <Select label='Year' value={inputValue.year} name='year' onChange={handleOnFieldsChange} >
+                        <Select label='Year' value={watch("year")} {...register('year' , {required:true})} name='year' onChange={handleOnChange} >
                             {Year && Year.map((data,index)=>{
                                 return <MenuItem key={index} value={data} >{data}</MenuItem>
                             })}
@@ -113,7 +116,7 @@ export default function RegisterationForm() {
                 <Grid sm={6} xs={12} item>
                     <FormControl fullWidth >
                         <InputLabel>Branch</InputLabel>
-                        <Select label='Branch' value={inputValue.branch} name='branch' onChange={handleOnFieldsChange} >
+                        <Select label='Branch' value={watch("branch")} name='branch' onChange={handleOnChange} >
                             <MenuItem value="Arts" >Arts</MenuItem>
                             <MenuItem value="Commerce" >Commerce</MenuItem>
                             <MenuItem value="Science" >Science</MenuItem>
@@ -125,7 +128,7 @@ export default function RegisterationForm() {
                 {/* Contact Field */}
                 <Grid sm={6} xs={12} item >
                     <FormControl fullWidth >
-                        <TextField onChange={handleOnFieldsChange} error={Boolean(errors.contact)} helperText={Boolean(errors.contact) ? <Typography component={"span"}>Minimum length 10</Typography> : null} label="Contact" value={inputValue.contact} type='number' name='contact' {...register("contact" , {minLength:10 , required:true})}  />
+                        <TextField error={Boolean(errors.contact)} helperText={Boolean(errors.contact) ? <Typography component={"span"}>Minimum length 10</Typography> : null} label="Contact"  type='number' name='contact' {...register("contact" , {minLength:10 , required:true})}  />
                     </FormControl>
                 </Grid>
 
@@ -134,7 +137,7 @@ export default function RegisterationForm() {
                 <Grid sm={6} xs={12} item>
                     <FormControl  fullWidth >
                         <FormLabel>Gender</FormLabel>
-                        <RadioGroup sx={{display:"flex" , flexDirection:"row"}} name='gender'   onChange={handleOnFieldsChange} value={inputValue.gender} >
+                        <RadioGroup sx={{display:"flex" , flexDirection:"row"}} name='gender'   onChange={handleOnChange} value={watch("gender")} >
                         <FormControlLabel control={<Radio />} value='female' label="Female" />
                         <FormControlLabel control={<Radio/>} value='male' label="Male" />
                         <FormControlLabel control={<Radio/>} value='other' label="Other" />
@@ -145,7 +148,7 @@ export default function RegisterationForm() {
 
                 {/* Term and Condition */}
                 <Grid  xs={12} item >
-                    <FormControlLabel  control={<Checkbox checked={inputValue.terms} required onChange={(e)=>{setInputValue({...inputValue , terms:e.target.checked})}} />}  label="Agree To Terms and Condition" />
+                    <FormControlLabel  control={<Checkbox checked={watch("terms")} onChange={(e)=>setValue("terms" , e.target.checked)} />}  label="Agree To Terms and Condition" />
                 </Grid>
 
             </Grid>
