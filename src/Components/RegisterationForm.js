@@ -81,7 +81,7 @@ export default function RegisterationForm() {
                 {/* Roll Number Field */}
                 <Grid sm={6} xs={12} item>
                     <FormControl fullWidth>
-                        <TextField   type='number'  name='rollnumber' label="Roll Number"  helperText={Boolean(errors.rollnumber) ? <Typography>
+                        <TextField   type='number'  name='rollnumber' label="Roll Number"  helperText={Boolean(errors.rollnumber) ? <Typography component={"span"} >
                             Max length is 6
                         </Typography> : null}  error={Boolean(errors.rollnumber)} {...register("rollnumber" , {maxLength:6,required:true} )}/>
                     </FormControl>
@@ -90,7 +90,7 @@ export default function RegisterationForm() {
                 {/*Name Field*/}
                 <Grid  sm={6} xs={12} item>
                     <FormControl fullWidth>
-                        <TextField helperText={Boolean(errors.name) ? <> <Typography>Required field *</Typography> </> : null} error={Boolean(errors.name)} type='text' name='name' label="Name" {...register("name" , {required:true})} />
+                        <TextField helperText={Boolean(errors.name) ? <> <Typography component={"span"}>Required field *</Typography> </> : null} error={Boolean(errors.name)} type='text' name='name' label="Name" {...register("name" , {required:true})} />
                     </FormControl>
                 </Grid>
 
@@ -125,7 +125,7 @@ export default function RegisterationForm() {
                 {/* Contact Field */}
                 <Grid sm={6} xs={12} item >
                     <FormControl fullWidth >
-                        <TextField onChange={handleOnFieldsChange} error={Boolean(errors.contact)} helperText={Boolean(errors.contact) ? <Typography>Minimum length 10</Typography> : null} label="Contact" value={inputValue.contact} type='number' name='contact' {...register("contact" , {minLength:10 , required:true})}  />
+                        <TextField onChange={handleOnFieldsChange} error={Boolean(errors.contact)} helperText={Boolean(errors.contact) ? <Typography component={"span"}>Minimum length 10</Typography> : null} label="Contact" value={inputValue.contact} type='number' name='contact' {...register("contact" , {minLength:10 , required:true})}  />
                     </FormControl>
                 </Grid>
 
