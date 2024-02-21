@@ -34,6 +34,7 @@ export default function RegisterationForm() {
     handleSubmit,
     reset,
     watch,
+    trigger,
     setValue,
   } = useForm({
     defaultValues: {
@@ -74,6 +75,7 @@ export default function RegisterationForm() {
 
     setValue(name, value);
     register(name);
+    trigger(name);
   };
 
   // Handle on delete
@@ -86,14 +88,13 @@ export default function RegisterationForm() {
   };
 
   // Handle on Update
-  const onUpdate = (id)=>{
-    const Updatedata = formData.filter((data)=>{
-      return data.id === id
-    })
+  const onUpdate = (id) => {
+    const Updatedata = formData.filter((data) => {
+      return data.id === id;
+    });
 
-    console.log(Updatedata)
-  }
-
+    console.log(Updatedata);
+  };
 
   console.log(errors);
   return (
@@ -117,7 +118,7 @@ export default function RegisterationForm() {
             </Typography>
           </Box>
 
-          {/* Form Heading */}
+          {/* ---------------------------------------------Form Heading */}
           <Box pt={2} pb={2} textAlign={"start"} mt={1}>
             <Typography
               fontSize={{ xs: 30, sm: 40, md: 45, lg: 55 }}
@@ -132,7 +133,7 @@ export default function RegisterationForm() {
           {/* Form */}
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <Grid container spacing={2}>
-              {/* Roll Number Field */}
+              {/* ----------------------------------------Roll Number Field */}
               <Grid sm={6} xs={12} item>
                 <FormControl fullWidth>
                   <TextField
@@ -161,7 +162,7 @@ export default function RegisterationForm() {
                 </FormControl>
               </Grid>
 
-              {/*Name Field*/}
+              {/*------------------------------------------------Name Field*/}
               <Grid sm={6} xs={12} item>
                 <FormControl fullWidth>
                   <TextField
@@ -192,17 +193,16 @@ export default function RegisterationForm() {
                 </FormControl>
               </Grid>
 
-              {/* Year Field */}
-              {/* TODO Pending */}
+              {/* -------------------------------------------Year Field */}
 
               <Grid sm={6} xs={12} item>
-                <FormControl fullWidth>
+                <FormControl error={Boolean(errors.year)} fullWidth>
                   <InputLabel>Year</InputLabel>
                   <Select
                     label="Year"
                     value={watch("year")}
-                    {...register("year", { required: true })}
                     name="year"
+                    {...register("year", { required: true })}
                     onChange={handleOnChange}
                   >
                     {Year &&
@@ -215,17 +215,25 @@ export default function RegisterationForm() {
                       })}
                   </Select>
                 </FormControl>
+                {errors.year ? (
+                  <FormHelperText
+                    style={{ color: "#DB2F2F", padding: "0px 13px" }}
+                  >
+                    Required Field
+                  </FormHelperText>
+                ) : null}
               </Grid>
 
-              {/* Branch Field  */}
+              {/*---------------------------------------------- Branch Field  */}
               {/* TODO Pending */}
               <Grid sm={6} xs={12} item>
-                <FormControl fullWidth>
+                <FormControl error={Boolean(errors.branch)} fullWidth>
                   <InputLabel>Branch</InputLabel>
                   <Select
                     label="Branch"
                     value={watch("branch")}
                     name="branch"
+                    {...register("branch" , {required:true})}
                     onChange={handleOnChange}
                   >
                     <MenuItem value="Arts">Arts</MenuItem>
@@ -234,13 +242,13 @@ export default function RegisterationForm() {
                   </Select>
                 </FormControl>
                 {errors.branch ? (
-                  <FormHelperText style={{ color: "#DB2F2F" }}>
+                  <FormHelperText style={{ color: "#DB2F2F" , padding: "0px 13px"}}>
                     Please Select Your Branch
                   </FormHelperText>
                 ) : null}
               </Grid>
 
-              {/* Contact Field */}
+              {/* --------------------------------------------------Contact Field */}
               <Grid sm={6} xs={12} item>
                 <FormControl fullWidth>
                   <TextField
@@ -251,7 +259,7 @@ export default function RegisterationForm() {
                           {errors.contact.type === "pattern" &&
                             "Invalid Number"}
                           {errors.contact.type === "required" &&
-                            "Field Required"}
+                            "Required Field"}
                           {errors.contact.type === "minLength" &&
                             "Please enter a 10-digit number"}
                           {errors.contact.type === "maxLength" &&
@@ -275,7 +283,7 @@ export default function RegisterationForm() {
                 </FormControl>
               </Grid>
 
-              {/* Gender Field */}
+              {/* -----------------------------------------------Gender Field */}
               <Grid sm={6} xs={12} item>
                 <FormControl fullWidth>
                   <FormLabel>Gender</FormLabel>
@@ -304,7 +312,7 @@ export default function RegisterationForm() {
                 </FormControl>
               </Grid>
 
-              {/* Term and Condition */}
+              {/* ---------------------------------------------Term and Condition */}
               <Grid xs={12} item>
                 <FormControlLabel
                   control={
@@ -372,7 +380,11 @@ export default function RegisterationForm() {
       {isMediumScreen ? (
         <DataCard onDelete={onDelete} formData={formData} onUpdate={onUpdate} />
       ) : (
-        <GridTable onDelete={onDelete} formData={formData} onUpdate={onUpdate} />
+        <GridTable
+          onDelete={onDelete}
+          formData={formData}
+          onUpdate={onUpdate}
+        />
       )}
     </>
   );
