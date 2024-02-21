@@ -1,12 +1,22 @@
-import { Card, Box, Typography, CardContent, Container } from "@mui/material";
+import {
+  Card,
+  Box,
+  Typography,
+  CardContent,
+  Container,
+  IconButton,
+} from "@mui/material";
 import React from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CreateIcon from '@mui/icons-material/Create';
 
-export default function DataCard({ formData }) {
+export default function DataCard({ formData , onDelete }) {
   return (
     <>
       <Container
         sx={{ marginTop: "10px", boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px" }}
       >
+
         <Box p={2} mt={4}>
           <Box p={1} textAlign={"center"}>
             <Typography
@@ -43,6 +53,18 @@ export default function DataCard({ formData }) {
                         <b>Gender :</b> {data.gender}
                       </Typography>
                     </CardContent>
+
+                    {/* Delete Button */}
+
+                    <Box textAlign={"end"} >
+                      <IconButton >
+                        <DeleteIcon sx={{fontSize:"40px" , margin:"0px 10px"}}  onClick={()=>{onDelete(data.id)}} />
+                        <CreateIcon sx={{fontSize:"40px" , margin:"0px 10px"}} />
+                      </IconButton>
+                    </Box>
+
+
+
                   </Card>
                 </Box>
               );

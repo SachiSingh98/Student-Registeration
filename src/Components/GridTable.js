@@ -1,8 +1,11 @@
-import { Box, Container, Typography } from '@mui/material'
+import { Box,  Container, Typography } from '@mui/material'
 import React from 'react'
 import {DataGrid} from '@mui/x-data-grid'
+import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function GridTable({formData}) {
+export default function GridTable({formData , onDelete}) {
+
 
 const column  = [
   {
@@ -39,7 +42,24 @@ const column  = [
     field:"gender",
     width:120,
     headerName:"Gender"
+  },
+  {
+    field:" ",
+    width:10,
+    headerName:" ",
+    renderCell : (params)=>{
+      return <DeleteIcon key={params.id} onClick={()=>{onDelete(params.id)}} />
+    }
+  },
+  {
+    field:" d",
+    width:20,
+    headerName:"",
+    renderCell : (params)=>{
+      return <CreateIcon/>
+    }
   }
+  
 
 
 ]
@@ -50,7 +70,7 @@ const column  = [
     <Container>
      <Box   mt={5} sx={{height:350}} >
       <Box m={2} textAlign={"center"} ><Typography variant='h3' color={"primary"} fontWeight={600} >Students Detail</Typography> </Box>
-      <DataGrid  checkboxSelection columns={column} rows={formData} />
+      <DataGrid   columns={column} rows={formData} />
       </Box> 
     </Container>
     </>

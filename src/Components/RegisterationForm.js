@@ -35,7 +35,6 @@ export default function RegisterationForm() {
     reset,
     watch,
     setValue,
-
   } = useForm({
     defaultValues: {
       branch: "",
@@ -48,10 +47,6 @@ export default function RegisterationForm() {
   const [formSubmitAlert, setFormSubmitAlert] = useState(false);
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
-
-  // const isMediumScreen = useMediaQuery((theme)=>{
-  //     theme.breakpoints
-  // })
 
   const { DarkMode, setDarkMode } = useContext(DarkThemeContext);
 
@@ -77,13 +72,20 @@ export default function RegisterationForm() {
     const name = e.target.name;
     const value = e.target.value;
 
-
     setValue(name, value);
     register(name);
   };
 
+  // Handle on delete
+  const onDelete = (id) => {
+    const filterData = formData.filter((data) => {
+      return data.id !== id;
+    });
 
-  console.log(errors)
+    setFormData(filterData);
+  };
+
+  console.log(errors);
   return (
     <>
       <Container
@@ -181,6 +183,8 @@ export default function RegisterationForm() {
               </Grid>
 
               {/* Year Field */}
+              {/* TODO Pending */}
+
               <Grid sm={6} xs={12} item>
                 <FormControl fullWidth>
                   <InputLabel>Year</InputLabel>
@@ -201,10 +205,10 @@ export default function RegisterationForm() {
                       })}
                   </Select>
                 </FormControl>
-
               </Grid>
 
-              {/* Branch Field */}
+              {/* Branch Field  */}
+              {/* TODO Pending */}
               <Grid sm={6} xs={12} item>
                 <FormControl fullWidth>
                   <InputLabel>Branch</InputLabel>
@@ -213,18 +217,17 @@ export default function RegisterationForm() {
                     value={watch("branch")}
                     name="branch"
                     onChange={handleOnChange}
-                    {...register("branch" , {required:true})}
                   >
                     <MenuItem value="Arts">Arts</MenuItem>
                     <MenuItem value="Commerce">Commerce</MenuItem>
                     <MenuItem value="Science">Science</MenuItem>
                   </Select>
                 </FormControl>
-                {errors.branch ? <FormHelperText
-                  style={{ color: '#DB2F2F' }}
-                >
-                 Please Select Your Branch
-                </FormHelperText> : null}
+                {errors.branch ? (
+                  <FormHelperText style={{ color: "#DB2F2F" }}>
+                    Please Select Your Branch
+                  </FormHelperText>
+                ) : null}
               </Grid>
 
               {/* Contact Field */}
@@ -304,11 +307,11 @@ export default function RegisterationForm() {
                   label="Terms and Condition"
                 />
 
-                {errors.terms ? <FormHelperText
-                  style={{ color: '#DB2F2F' }}
-                >
-                 Please agree to the terms and conditions
-                </FormHelperText> : null}
+                {errors.terms ? (
+                  <FormHelperText style={{ color: "#DB2F2F" }}>
+                    Please agree to the terms and conditions
+                  </FormHelperText>
+                ) : null}
               </Grid>
             </Grid>
 
@@ -331,7 +334,12 @@ export default function RegisterationForm() {
                   fullWidth
                   variant="contained"
                   // disabled={Boolean(Object.keys(errors).length !==0)}
-                  disabled={Boolean(errors.name || errors.terms || errors.contact || errors.rollnumber)}
+                  disabled={Boolean(
+                    errors.name ||
+                      errors.terms ||
+                      errors.contact ||
+                      errors.rollnumber
+                  )}
                   type="submit"
                 >
                   Submit
@@ -352,9 +360,9 @@ export default function RegisterationForm() {
       {/* ------------------------------------------------------------------------------------------------------------ */}
 
       {isMediumScreen ? (
-        <DataCard formData={formData} />
+        <DataCard onDelete={onDelete} formData={formData} />
       ) : (
-        <GridTable formData={formData} />
+        <GridTable onDelete={onDelete} formData={formData} />
       )}
     </>
   );
