@@ -28,6 +28,7 @@ import DataCard from "./DataCard";
 import { DarkThemeContext } from "../Context/DarkThemeProvider";
 
 export default function RegisterationForm() {
+
   const {
     register,
     formState: { errors },
@@ -225,7 +226,6 @@ export default function RegisterationForm() {
               </Grid>
 
               {/*---------------------------------------------- Branch Field  */}
-              {/* TODO Pending */}
               <Grid sm={6} xs={12} item>
                 <FormControl error={Boolean(errors.branch)} fullWidth>
                   <InputLabel>Branch</InputLabel>
@@ -233,7 +233,7 @@ export default function RegisterationForm() {
                     label="Branch"
                     value={watch("branch")}
                     name="branch"
-                    {...register("branch" , {required:true})}
+                    {...register("branch", { required: true })}
                     onChange={handleOnChange}
                   >
                     <MenuItem value="Arts">Arts</MenuItem>
@@ -242,7 +242,9 @@ export default function RegisterationForm() {
                   </Select>
                 </FormControl>
                 {errors.branch ? (
-                  <FormHelperText style={{ color: "#DB2F2F" , padding: "0px 13px"}}>
+                  <FormHelperText
+                    style={{ color: "#DB2F2F", padding: "0px 13px" }}
+                  >
                     Please Select Your Branch
                   </FormHelperText>
                 ) : null}
@@ -351,13 +353,7 @@ export default function RegisterationForm() {
                 <Button
                   fullWidth
                   variant="contained"
-                  // disabled={Boolean(Object.keys(errors).length !==0)}
-                  disabled={Boolean(
-                    errors.name ||
-                      errors.terms ||
-                      errors.contact ||
-                      errors.rollnumber
-                  )}
+                  disabled={Boolean(Object.keys(errors).length !==0)}
                   type="submit"
                 >
                   Submit

@@ -1,11 +1,10 @@
-import { Box,  Container, Typography } from '@mui/material'
+import { Box,  Container, Typography  } from '@mui/material'
 import React from 'react'
 import {DataGrid} from '@mui/x-data-grid'
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function GridTable({formData , onDelete , onUpdate}) {
-
 
 const column  = [
   {
@@ -66,13 +65,13 @@ const column  = [
 
 
   return (
-    <>
+    <Box height={"100vh"} >
     <Container>
      <Box   mt={5} sx={{height:350}} >
       <Box m={2} textAlign={"center"} ><Typography variant='h3' color={"primary"} fontWeight={600} >Students Detail</Typography> </Box>
       <DataGrid   columns={column} rows={formData} />
       </Box> 
     </Container>
-    </>
+    </Box>
   )
 }
