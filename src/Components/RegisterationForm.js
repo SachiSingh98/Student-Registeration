@@ -94,8 +94,6 @@ export default function RegisterationForm() {
       return data.id === id;
     });
 
-
-
     console.log(Updatedata);
   };
 
