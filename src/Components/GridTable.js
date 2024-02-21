@@ -48,7 +48,7 @@ const column  = [
   return (
     <>
     <Container>
-     <Box mt={5} sx={{height:350}} >
+     <Box   mt={5} sx={{height:350}} >
       <Box m={2} textAlign={"center"} ><Typography variant='h3' color={"primary"} fontWeight={600} >Students Detail</Typography> </Box>
       <DataGrid  checkboxSelection columns={column} rows={formData} />
       </Box> 

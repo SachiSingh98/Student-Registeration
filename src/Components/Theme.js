@@ -25,7 +25,11 @@ export const LightModeTheme = createTheme({
       },
       text:{
         primary:"#8a8ca2"
-      }
+      },
+      background: {
+        default: "#212121",
+        paper: "#303030",
+      },
     }
   })
 
