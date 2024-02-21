@@ -85,6 +85,16 @@ export default function RegisterationForm() {
     setFormData(filterData);
   };
 
+  // Handle on Update
+  const onUpdate = (id)=>{
+    const Updatedata = formData.filter((data)=>{
+      return data.id === id
+    })
+
+    console.log(Updatedata)
+  }
+
+
   console.log(errors);
   return (
     <>
@@ -360,9 +370,9 @@ export default function RegisterationForm() {
       {/* ------------------------------------------------------------------------------------------------------------ */}
 
       {isMediumScreen ? (
-        <DataCard onDelete={onDelete} formData={formData} />
+        <DataCard onDelete={onDelete} formData={formData} onUpdate={onUpdate} />
       ) : (
-        <GridTable onDelete={onDelete} formData={formData} />
+        <GridTable onDelete={onDelete} formData={formData} onUpdate={onUpdate} />
       )}
     </>
   );

@@ -10,7 +10,7 @@ import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from '@mui/icons-material/Create';
 
-export default function DataCard({ formData , onDelete }) {
+export default function DataCard({ formData , onDelete , onUpdate }) {
   return (
     <>
       <Container
@@ -57,8 +57,11 @@ export default function DataCard({ formData , onDelete }) {
                     {/* Delete Button */}
 
                     <Box textAlign={"end"} >
-                      <IconButton >
-                        <DeleteIcon sx={{fontSize:"40px" , margin:"0px 10px"}}  onClick={()=>{onDelete(data.id)}} />
+                      <IconButton onClick={()=>{onDelete(data.id)}}>
+                        <DeleteIcon sx={{fontSize:"40px" , margin:"0px 10px"}}   />
+                      </IconButton>
+
+                      <IconButton onClick={()=>{onUpdate(data.id)}} >
                         <CreateIcon sx={{fontSize:"40px" , margin:"0px 10px"}} />
                       </IconButton>
                     </Box>

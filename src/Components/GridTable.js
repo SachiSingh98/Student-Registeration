@@ -4,7 +4,7 @@ import {DataGrid} from '@mui/x-data-grid'
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function GridTable({formData , onDelete}) {
+export default function GridTable({formData , onDelete , onUpdate}) {
 
 
 const column  = [
@@ -56,7 +56,7 @@ const column  = [
     width:20,
     headerName:"",
     renderCell : (params)=>{
-      return <CreateIcon/>
+      return <CreateIcon key={params.id} onClick={()=>{onUpdate(params.id)}} />
     }
   }
   
