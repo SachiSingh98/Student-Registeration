@@ -20,7 +20,7 @@ const column  = [
   },
   {
     field:"name",
-    width:180,
+    width:150,
     headerName:"Name"
   },
   {
@@ -30,31 +30,31 @@ const column  = [
   },
   {
     field:"branch",
-    width:150,
+    width:120,
     headerName:"Branch"
   },
   {
     field:"contact",
-    width:200,
+    width:150,
     headerName:"Contact"
   },
   {
     field:"gender",
-    width:120,
+    width:100,
     headerName:"Gender"
   },
   {
-    field:" ",
-    width:10,
-    headerName:" ",
+    field:"Delete",
+    width:100,
+    headerName:"Delete",
     renderCell : (params)=>{
       return <DeleteIcon key={params.id} onClick={()=>{onDelete(params.id)}} />
     }
   },
   {
-    field:" d",
-    width:20,
-    headerName:"",
+    field:"Update",
+    width:100,
+    headerName:"Update",
     renderCell : (params)=>{
       return <CreateIcon key={params.id} onClick={()=>{onUpdate(params.id)}} />
     }
