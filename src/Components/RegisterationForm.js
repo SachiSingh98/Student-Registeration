@@ -97,7 +97,6 @@ export default function RegisterationForm() {
     console.log(Updatedata);
   };
 
-  console.log(errors);
   return (
     <>
       <Container
