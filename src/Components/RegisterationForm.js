@@ -39,6 +39,9 @@ export default function RegisterationForm() {
     setValue,
   } = useForm({
     defaultValues: {
+      rollnumber:'',
+      name:"",
+      contact:"",
       branch: "",
       year: "",
       gender: "female",
@@ -84,17 +87,15 @@ export default function RegisterationForm() {
     const filterData = formData.filter((data) => {
       return data.id !== id;
     });
-
     setFormData(filterData);
   };
-
+  
   // Handle on Update
   const onUpdate = (id) => {
-    const Updatedata = formData.filter((data) => {
-      return data.id === id;
-    });
-
-    console.log(Updatedata);
+    const updatedData = formData.filter((data) =>data.id === id);
+    console.log(updatedData[0].rollnumber);
+    setValue("rollnumber" , updatedData[0].rollnumber)
+    
   };
 
   return (
