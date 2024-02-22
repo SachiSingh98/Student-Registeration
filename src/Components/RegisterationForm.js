@@ -136,11 +136,9 @@ export default function RegisterationForm() {
             </Typography>
           </Box>
 
-          {/* TODO  Pending */}
           {/* ---------------------------------------------Form Heading */}
           <Box textAlign={"start"} mt={1}>
             <Typography
-              // {TODO}
               fontSize={{ xs: 30, sm: 40, md: 45, lg: 55 }}
               fontWeight={700}
               color="primary"
@@ -195,6 +193,7 @@ export default function RegisterationForm() {
                       name="name"
                       type="text"
                       label="Name"
+                      required
                       InputLabelProps={{ shrink: Boolean(watch("name")) }}
                       helperText={
                         Boolean(errors.name) ? (
@@ -262,6 +261,7 @@ export default function RegisterationForm() {
                     <Select
                       label="Branch"
                       value={watch("branch")}
+                      required
                       name="branch"
                       {...register("branch", { required: true })}
                       onChange={handleOnChange}
@@ -285,6 +285,7 @@ export default function RegisterationForm() {
                   <FormControl fullWidth>
                     <TextField
                       error={Boolean(errors.contact)}
+                      required
                       helperText={
                         Boolean(errors.contact) ? (
                           <>
@@ -323,6 +324,7 @@ export default function RegisterationForm() {
                       sx={{ display: "flex", flexDirection: "row" }}
                       name="gender"
                       onChange={handleOnChange}
+                      required
                       value={watch("gender")}
                     >
                       <FormControlLabel
@@ -350,6 +352,7 @@ export default function RegisterationForm() {
                     control={
                       <Checkbox
                         checked={watch("terms")}
+                        required
                         onChange={(e) => setValue("terms", e.target.checked)}
                         {...register("terms", { required: true })}
                       />
