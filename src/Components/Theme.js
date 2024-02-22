@@ -7,7 +7,7 @@ export const LightModeTheme = createTheme({
     },
     text:{
       primary:"#8a8ca2"
-    }
+    },
   },
 })
 
